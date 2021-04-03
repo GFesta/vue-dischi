@@ -14,10 +14,9 @@
                 <div class="container">
                     <img src="img/Spotify_logo.png" alt="logo" />
                     <div class="filter">
-                        <select v-model="genere_selezionato">
-                            <option value="generi">Generi musicali</option>
-                            <option value=""></option>
-                            <option value=""></option>
+                        <select v-model="genereSelezionato">
+                            <option value="">Generi musicali</option>
+                            <option v-for="genere in generi" :value="genere">{{ genere }}</option>
                         </select>
                     </div>
                 </div>
@@ -26,7 +25,8 @@
             <!-- container cd img-titolo-autore-anno -->
             <div class="cds-container container">
 
-                <div class="cd" v-for="disco in dischi">
+                <div class="cd" v-for="disco in dischi" 
+                    v-if="genereSelezionato == '' || genereSelezionato == disco.genre">
                     <img :src="disco.poster" :alt="disco.title">
                     <h4>{{ disco.title }}</h4>
                     <span class="author">{{ disco.author }}</span>

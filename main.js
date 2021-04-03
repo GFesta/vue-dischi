@@ -5,7 +5,9 @@
 var app = new Vue({
     el: '#app',
     data: {
-        dischi: []
+        dischi: [],
+        generi: [],
+        genereSelezionato: ''
     },
     mounted() {
         axios
@@ -13,14 +15,26 @@ var app = new Vue({
         .then((lista) => {
             // salvo i dischi richiamati da ajax
             this.dischi = lista.data.response;
+
+            //BONUS: Creare una select con tutti i generi dei dischi. 
+            //In base a cosa scegliamo nella select, vedremo i corrispondenti cd.
+
+            //tutti i generi musicali vengono recuperati
+            this.dischi.forEach(disco => {
+                if (!this.generi.includes(disco.genre)) {
+                    this.generi.push(disco.genre);
+                }
+            });
+
+            //BONUS 2: Ordinare i dischi per anno di uscita.
+            this.dischi.sort(function(disco1, disco2) {
+                return parseInt(disco1.year) - parseInt(disco2.year);
+            });
+
+
         });
 
 
 
     }
 });
-
-//BONUS: Creare una select con tutti i generi dei dischi. 
-//In base a cosa scegliamo nella select, vedremo i corrispondenti cd.
-
-//BONUS 2: Ordinare i dischi per anno di uscita.
